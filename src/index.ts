@@ -38,7 +38,7 @@ client.once("ready", async () => {
 
   await syncInvites();
 
-  console.log("Invite cache initialized.", client.guilds.cache.size);
+  console.log("Invite cache initialized.");
 });
 
 client.on("inviteCreate", async () => {
@@ -57,7 +57,7 @@ client.on("guildMemberAdd", async (member) => {
 
   // Find which invite increased in use
   const usedInvite = newInvites.find(
-    (i) => (cachedInvites[i.code].uses || 0) < (i.uses || 0)
+    (i) => (cachedInvites[i.code]?.uses || 0) < (i.uses || 0)
   );
 
   await syncInvites();

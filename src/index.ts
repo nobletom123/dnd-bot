@@ -57,7 +57,7 @@ client.on("guildMemberAdd", async (member) => {
 
   // Find which invite increased in use
   const usedInvite = newInvites.find(
-    (i) => cachedInvites[i.code].uses < (i.uses || 0)
+    (i) => (cachedInvites[i.code].uses || 0) < (i.uses || 0)
   );
 
   await syncInvites();

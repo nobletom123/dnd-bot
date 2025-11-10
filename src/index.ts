@@ -68,7 +68,6 @@ client.on("guildMemberAdd", async (member) => {
     );
     // Optionally, send to a channel
     const channel = member.guild.channels.cache.get(adminChannelName);
-    console.log("admin channel:", channel);
     if (channel && channel.isTextBased()) {
       channel.send(`${member} joined using invite: ${usedInvite.url}`);
     }

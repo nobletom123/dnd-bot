@@ -82,9 +82,7 @@ client.on("guildMemberAdd", async (member) => {
     if (channel && channel.isTextBased()) {
       console.log("Sending message to admin channel about vanity URL join.");
       channel.send(
-        `${member} joined without using a regular invite link - assuming ${
-          member.guild.vanityURLCode ? "vanity URL." : "unknown method."
-        }`
+        `Potential campaign player ${member} has arrived! Time to greet them!`
       );
     } else {
       console.log(

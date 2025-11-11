@@ -66,7 +66,14 @@ client.on("guildMemberAdd", async (member) => {
 
   await syncInvites();
 
-  if (usedInvite) {
+  if (!usedInvite) {
+    console.log(
+      `${member.user.tag} joined, but no invite use increase detected.`
+    );
+    return;
+  }
+
+  if (usedInvite.code === process.env.INVITE_CODE) {
     console.log(
       `${member.user.tag} joined using invite code: ${usedInvite.code}`
     );
@@ -76,7 +83,10 @@ client.on("guildMemberAdd", async (member) => {
       channel.send(`${member} joined using invite: ${usedInvite.url}`);
     }
   } else {
-    console.log(`${member.user.tag} joined, but invite tracking failed.`);
+    console.log(
+      `${member.user.tag} joined, but not using tracked invite.`,
+      `Used invite code: ${usedInvite.code}`
+    );
   }
 });
 

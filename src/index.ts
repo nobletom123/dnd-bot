@@ -64,30 +64,39 @@ client.on("guildMemberAdd", async (member) => {
     (i) => (cachedInvites[i.code]?.uses || 0) < (i.uses || 0)
   );
 
+  console.log("cachedInvites", cachedInvites);
+  console.log(
+    "newInvites",
+    newInvites.map((i) => ({ code: i.code, uses: i.uses }))
+  );
+
   await syncInvites();
 
   if (!usedInvite) {
     console.log(
-      `${member.user.tag} joined, but no invite use increase detected.`
+      `${member.user.tag} joined, but no invite use detected - assuming vanity url.`
     );
-    return;
-  }
 
-  if (usedInvite.code === process.env.INVITE_CODE) {
-    console.log(
-      `${member.user.tag} joined using invite code: ${usedInvite.code}`
-    );
     // Optionally, send to a channel
     const channel = member.guild.channels.cache.get(adminChannelName);
     if (channel && channel.isTextBased()) {
-      channel.send(`${member} joined using invite: ${usedInvite.url}`);
+      console.log("Sending message to admin channel about vanity URL join.");
+      channel.send(
+        `${member} joined without using a regular invite link - assuming ${
+          member.guild.vanityURLCode ? "vanity URL." : "unknown method."
+        }`
+      );
+    } else {
+      console.log(
+        "Admin channel not found or is not text-based, cannot send message."
+      );
     }
-  } else {
-    console.log(
-      `${member.user.tag} joined, but not using tracked invite.`,
-      `Used invite code: ${usedInvite.code}`
-    );
+    return;
   }
+
+  console.log(
+    `${member.user.tag} joined using invite code: ${usedInvite.code}`
+  );
 });
 
 client.login(process.env.BOT_TOKEN);

@@ -65,6 +65,7 @@ client.on("guildMemberAdd", async (member) => {
   );
 
   console.log("cachedInvites", cachedInvites);
+  console.log("newInivites raw", newInvites);
   console.log(
     "newInvites",
     newInvites.map((i) => ({ code: i.code, uses: i.uses }))

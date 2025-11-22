@@ -25,7 +25,9 @@ const invites: {
 
 const syncInvites = async () => {
   client.guilds.cache.forEach(async (guild) => {
-    const guildInvites = await guild.invites.fetch();
+    const guildInvites = await guild.invites.fetch({
+      cache: false,
+    });
     invites[guild.id] = {};
     guildInvites.forEach((invite) => {
       invites[guild.id][invite.code] = {
@@ -57,7 +59,9 @@ client.on("inviteDelete", async () => {
 
 client.on("guildMemberAdd", async (member) => {
   const cachedInvites = invites[member.guild.id];
-  const newInvites = await member.guild.invites.fetch();
+  const newInvites = await member.guild.invites.fetch({
+    cache: false,
+  });
 
   // Find which invite increased in use
   const usedInvite = newInvites.find(
@@ -65,7 +69,7 @@ client.on("guildMemberAdd", async (member) => {
   );
 
   console.log("cachedInvites", cachedInvites);
-  console.log("newInivites raw", newInvites);
+  console.log("newInvites raw", newInvites);
   console.log(
     "newInvites",
     newInvites.map((i) => ({ code: i.code, uses: i.uses }))

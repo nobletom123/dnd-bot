@@ -28,6 +28,10 @@ const syncInvites = async () => {
     const guildInvites = await guild.invites.fetch({
       cache: false,
     });
+
+    console.log("syncing invites for guild", guild.id);
+    console.log("guildInvites raw", guildInvites);
+
     invites[guild.id] = {};
     guildInvites.forEach((invite) => {
       invites[guild.id][invite.code] = {

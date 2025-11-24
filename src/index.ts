@@ -30,7 +30,6 @@ const syncInvites = async () => {
     });
 
     console.log("syncing invites for guild", guild.id);
-    console.log("guildInvites raw", guildInvites);
 
     invites[guild.id] = {};
     guildInvites.forEach((invite) => {
@@ -73,7 +72,6 @@ client.on("guildMemberAdd", async (member) => {
   );
 
   console.log("cachedInvites", cachedInvites);
-  console.log("newInvites raw", newInvites);
   console.log(
     "newInvites",
     newInvites.map((i) => ({ code: i.code, uses: i.uses }))
